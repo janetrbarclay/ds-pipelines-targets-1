@@ -1,4 +1,5 @@
 library(dplyr)
+library(readr)
 
 plot_data <- function(processed_data = 'model_summary_results.csv',figure_file='figure_1.png'){
 	eval_data = readr::read_csv(file.path("2_process","out",processed_data))
