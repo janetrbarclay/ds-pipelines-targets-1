@@ -1,6 +1,8 @@
 library(dplyr)
 library(stringr)
 library(whisker)
+library(render)
+library(readr)
 
 process_data<-function(data_file='model_RMSEs.csv', processed_data_file='model_summary_results.csv', diagnostic_output_file = 'model_diagnostic_text.txt'){
 	data_file_path = file.path("1_fetch","out",data_file)
