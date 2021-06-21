@@ -1,11 +1,10 @@
 library(dplyr)
 library(readr)
 
-plot_data <- function(processed_data = 'model_summary_results.csv',figure_file='figure_1.png'){
-	eval_data = readr::read_csv(file.path("2_process","out",processed_data))
+make_plot <- function(out_filepath='figure_1.png',data = 'model_summary_results.csv'){
 	
 	# Create a plot
-	png(file = file.path("3_visualize","out", figure_file), width = 8, height = 10, res = 200, units = 'in')
+	png(file = out_filepath, width = 8, height = 10, res = 200, units = 'in')
 	par(omi = c(0,0,0.05,0.05), mai = c(1,1,0,0), las = 1, mgp = c(2,.5,0), cex = 1.5)
 
 	plot(NA, NA, xlim = c(2, 1000), ylim = c(4.7, 0.75),
@@ -21,7 +20,7 @@ plot_data <- function(processed_data = 'model_summary_results.csv',figure_file='
 	  mutate(dl = -pgdl, pb = 0, n_prof = n_profs)
 
 	for (mod in c('pb','dl','pgdl')){
-	  mod_data <- filter(eval_data, model_type == mod)
+	  mod_data <- filter(data, model_type == mod)
 	  mod_profiles <- unique(mod_data$n_prof)
 	  for (mod_profile in mod_profiles){
 		d <- filter(mod_data, n_prof == mod_profile) %>% summarize(y0 = min(rmse), y1 = max(rmse), col = unique(col))
@@ -46,4 +45,7 @@ plot_data <- function(processed_data = 'model_summary_results.csv',figure_file='
 	text(2.3, 1.1, 'Process-Based', pos = 4, cex = 1.1)
 
 	dev.off()
+
+	
+	return (out_filepath)
 }

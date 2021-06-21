@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 */out/*
+1_fetch/out/*.csv
+_targets
